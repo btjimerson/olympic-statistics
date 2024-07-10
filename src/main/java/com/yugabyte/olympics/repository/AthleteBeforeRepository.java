@@ -3,10 +3,8 @@ package com.yugabyte.olympics.repository;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 
 import com.yugabyte.olympics.entity.AthleteBefore;
-import com.yugabyte.olympics.entity.MedalCount;
 
 /**
  * JPA repository the AthleteBefore entity
@@ -14,13 +12,11 @@ import com.yugabyte.olympics.entity.MedalCount;
 public interface AthleteBeforeRepository extends JpaRepository<AthleteBefore, Integer> {
 
     /**
-     * Finds top medalers for a given year
+     * Finds athlete_after where event = ?1 and medal does not equal ?2
      * 
-     * @return The top medalers for a given year
+     * @param event The event to get medaling athlets for
+     * @param medal Medal values to filter out
+     * @return
      */
-    @Query("select ab.name as name, ab.team as team, ab.year as year, count(ab.medal) as medalCount, " +
-            "ab.medal as medal from athlete_before as ab where ab.medal <> 'NA' group by " +
-            "(ab.medal, ab.team, ab.name, ab.year) order by medalCount desc limit 200")
-    public List<MedalCount> findTopMedalers();
-
+    public List<AthleteBefore> findByEventEqualsAndMedalNotOrderByYearDesc(String event, String medal);
 }

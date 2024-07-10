@@ -25,18 +25,33 @@
                     </div>
                 </div>
             </div>
-            <div class="row mb-4">
-                <div class="col">
-                    <a href="/athletesBefore/top" class="btn btn-primary" role="button">Show top 200 medalers - ID
-                        PK</a>
+            <form action="/medalers" method="post">
+                <div class="row mb-4">
+                    <div class="col">
+                        <label for="event" class="form-label">Select Event</label>
+                        <select name="event" id="event" class="form-select">
+                            <option th:each="event: ${eventList}" th:value="${event}"
+                                th:selected="${event == selectedEvent}"><span th:text="${event}"></span>
+                            </option>
+                        </select>
+                    </div>
                 </div>
-            </div>
-            <div class="row mb-4">
-                <div class="col">
-                    <a href="/athletesAfter/top" class="btn btn-success" role="button">Show top 200 medalers - Event
-                        PK</a>
+                <div class="row mb-4">
+                    <input type="hidden" name="pkValue" id="pkValue" />
+                    <div class="col">
+                        <button class="btn btn-primary" id="showMedalsId" name="showMedalsId"
+                            onclick="document.getElementById('pkValue').value = 'id';document.forms[0].submit()">
+                            Show Medals - ID PK
+                        </button>
+                    </div>
+                    <div class="col">
+                        <button class="btn btn-success" id="showMedalsEvent" name="showMedalsEvent"
+                            onclick="document.getElementById('pkValue').value = 'event';document.forms[0].submit()">
+                            Show Medals - Event PK
+                        </button>
+                    </div>
                 </div>
-            </div>
+            </form>
             <div class="row mb-4" th:if="${queryTime}">
                 <div class="col">
                     <div class="alert alert-primary">
@@ -51,7 +66,6 @@
                             <th scope="col">Name</th>
                             <th scope="col">Team</th>
                             <th scope="col">Year</th>
-                            <th scope="col"># Medals</th>
                             <th scope="col">Medal</th>
                         </tr>
                     </thead>
@@ -65,9 +79,6 @@
                             </td>
                             <td>
                                 <div th:text="${medaler.year}"></div>
-                            </td>
-                            <td>
-                                <div th:text="${medaler.medalCount}"></div>
                             </td>
                             <td>
                                 <div th:text="${medaler.medal}"></div>
