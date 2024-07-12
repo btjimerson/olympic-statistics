@@ -40,13 +40,13 @@
                     <input type="hidden" name="pkValue" id="pkValue" />
                     <div class="col">
                         <button class="btn btn-primary" id="showMedalsId" name="showMedalsId"
-                            onclick="document.getElementById('pkValue').value = 'id';document.forms[0].submit()">
+                            onclick="document.getElementById('pkValue').value = 'id'; document.forms[0].submit();">
                             Show Medals - ID PK
                         </button>
                     </div>
                     <div class="col">
                         <button class="btn btn-success" id="showMedalsEvent" name="showMedalsEvent"
-                            onclick="document.getElementById('pkValue').value = 'event';document.forms[0].submit()">
+                            onclick="document.getElementById('pkValue').value = 'event'; document.forms[0].submit();">
                             Show Medals - Event PK
                         </button>
                     </div>
@@ -55,7 +55,8 @@
             <div class="row mb-4" th:if="${queryTime}">
                 <div class="col">
                     <div class="alert alert-primary">
-                        Query time = <span th:text="${queryTime}"></span> ms.
+                        Query time = <span th:text="${queryTime}"></span> ms using partition key '<span
+                            th:text="${partitionKey}"></span>'.
                     </div>
                 </div>
             </div>

@@ -15,9 +15,7 @@ import com.yugabyte.olympics.repository.AthleteBeforeRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.servlet.http.HttpSession;
-import lombok.extern.apachecommons.CommonsLog;
 
-@CommonsLog
 @Controller
 public class OlympicStatisticsController {
 
@@ -73,6 +71,7 @@ public class OlympicStatisticsController {
 
         model.addAttribute("eventList", session.getAttribute("eventList"));
         model.addAttribute("selectedEvent", event);
+        model.addAttribute("partitionKey", pkValue);
         model.addAttribute("queryTime", endTime - startTime);
 
         return "index";
