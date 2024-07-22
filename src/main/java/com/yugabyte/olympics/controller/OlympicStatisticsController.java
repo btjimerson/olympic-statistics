@@ -1,5 +1,6 @@
 package com.yugabyte.olympics.controller;
 
+import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,12 +70,19 @@ public class OlympicStatisticsController {
         }
         Long endTime = System.currentTimeMillis();
 
+        if (session.getAttribute("eventList") == null) {
+            session.setAttribute("eventList", getEventList());
+        }
         model.addAttribute("eventList", session.getAttribute("eventList"));
         model.addAttribute("selectedEvent", event);
         model.addAttribute("partitionKey", pkValue);
         model.addAttribute("queryTime", endTime - startTime);
 
         return "index";
+    }
+
+    public void saveRecord(Principal principal) {
+        myRecord.setCountry(principal.)
     }
 
     /**
