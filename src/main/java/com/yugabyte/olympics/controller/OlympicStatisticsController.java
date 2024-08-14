@@ -63,9 +63,11 @@ public class OlympicStatisticsController {
         if (pkValue.equals("id")) {
             model.addAttribute("medalers",
                     athleteBeforeRepository.findByEventEqualsAndMedalNotOrderByYearDesc(event, "NA"));
+            model.addAttribute("queryPlan", athleteBeforeRepository.explainFindByEventAndMedal(event, "NA"));
         } else {
             model.addAttribute("medalers",
                     athleteAfterRepository.findByEventEqualsAndMedalNotOrderByYearDesc(event, "NA"));
+            model.addAttribute("queryPlan", athleteAfterRepository.explainFindByEventAndMedal(event, "NA"));
         }
         Long endTime = System.currentTimeMillis();
 

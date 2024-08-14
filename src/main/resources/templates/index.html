@@ -6,6 +6,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="./css/application.css" />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
@@ -29,7 +30,7 @@
                 <div class="row mb-4">
                     <div class="col">
                         <label for="event" class="form-label">Select Event</label>
-                        <select name="event" id="event" class="form-select">
+                        <select name="event" id="event" class="form-select event-select">
                             <option th:each="event: ${eventList}" th:value="${event}"
                                 th:selected="${event == selectedEvent}"><span th:text="${event}"></span>
                             </option>
@@ -43,8 +44,7 @@
                             onclick="document.getElementById('pkValue').value = 'id'; document.forms[0].submit();">
                             Show Medals - ID PK
                         </button>
-                    </div>
-                    <div class="col">
+                        &nbsp;&nbsp;
                         <button class="btn btn-success" id="showMedalsEvent" name="showMedalsEvent"
                             onclick="document.getElementById('pkValue').value = 'event'; document.forms[0].submit();">
                             Show Medals - Event PK
@@ -52,12 +52,31 @@
                     </div>
                 </div>
             </form>
-            <div class="row mb-4" th:if="${queryTime}">
-                <div class="col">
-                    <div class="alert alert-primary">
-                        Query time = <span th:text="${queryTime}"></span> ms using partition key '<span
-                            th:text="${partitionKey}"></span>'.
+            <div class="modal fade" id="queryPlanModal" tabindex="-1" aria-labelledby="queryPlanModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="queryPlanModalLabel">Query Plan</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <ul th:if="${queryPlan}">
+                                <p th:each="planItem: ${queryPlan}" th:text="${planItem}"></p>
+                            </ul>
+                        </div>
+                        <div class="modal-footer">
+                            Query time in controller: <span th:text="${queryTime}"></span>ms
+                        </div>
                     </div>
+                </div>
+            </div>
+            <div class="row" th:if="${queryPlan}">
+                <div class="col">
+                    <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
+                        data-bs-target="#queryPlanModal">
+                        View Query Plan
+                    </button>
                 </div>
             </div>
             <div class="row">
